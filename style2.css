@@ -1,0 +1,28 @@
+* {
+    box-sizing: border-box;
+}
+
+body { 
+    color: black;
+    /*background-image: url('https://wallpaperaccess.com/full/740488.jpg');
+    background-size: cover;*/
+    text-align: center;
+}
+main {
+    height: 350px;
+    margin-top: 150px;
+    border: gray solid;
+}
+form {
+    padding-top: 40px;
+    display: flex;
+    flex-direction: column;
+    font-size: 23px;
+    
+}
+#submit {
+    width: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
