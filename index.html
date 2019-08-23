@@ -11,29 +11,88 @@
 </head>
 <body>
   <header role="banner">
-    
-    <div class="one">
-      <p>Question: <span class="questionNumber">0</span>/10</p>
-      <p>Score: <span class="score">0</span></p>
-    </div>  
+      <ul>
+        <li>Question: <span class="questionNumber">0</span>/5</li>
+        <li>Score: <span class="score">0</span></li>
+      </ul>
+    </div>
   </header>
   <main role="main">
-    <div class="begin">
-      <h1>Put Your Four Wheeled Knowlwdge To The Test!</h1>
-      <button type="button" class="begin-button">Start Your Engine!</button>
+    <section role="startPage">
+    <div id="start-title"><h1>Test Your Four Wheeled Knowledge</h1></div>
+    <div id="startPageButton">
+      <button id="start-button">Start Your Engine</button>
+  </section>
+   <section id="results" role= "js rendered question set">
+    <h1>Questions</h1>
+    <form name="quizForm" onsubmit="return submitAnswers()">
+      <div class="container">
+      <h3>1.Where is Honda's country of origin?</h3>
+      <input type="radio" name="question1" value="a">India <br />
+      <input type="radio" name="question1" value="b">Japan <br />
+      <input type="radio" name="question1" value="c">South Korea<br />
+      <input type="radio" name="quesiton1" value="d">Russia
     </div>
-    <form>
-      <div class="ans1"><input type="radio" value="A1">Answer Option 1</div>
-      <div class="ans2"><input type="radio" value="A2">Answer Option 2</div>
-      <div class="ans3"><input type="radio" value="A3">Answer Option 3</div>
-      <div class="ans4"><input type="radio" value="A4">Answer Option 4</div>
-      <button id="submit">Submit</button>
+    <div class="container">
+      <h3>2. Where is BMW's country of origin?</h3>
+      <input type="radio" name="question2" value="a">Germany <br />
+      <input type="radio" name="question2" value="b">Belgium<br />
+      <input type="radio" name="question2" value="c">Italy<br />
+      <input type="radio" name="quesiton2" value="d">England
+    </div>
+    <div class="container">
+      <h3>3. Where is Porsche's country of origin?</h3>
+      <input type="radio" name="question3" value="a">Italy <br />
+      <input type="radio" name="question3" value="b">Japan <br />
+      <input type="radio" name="question3" value="c">France<br />
+      <input type="radio" name="quesiton3" value="d">Germany
+    </div>
+  <div class="container">
+      <h3>4. Which vehicle band is made in Italy?
+      </h3>
+       <input type="radio" name="question4" value="a">Mercedes-Benz <br />
+      <input type="radio" name="question4" value="b">Ford <br />
+      <input type="radio" name="question4" value="c">Fiat<br />
+      <input type="radio" name="quesiton4" value="d">Peugot
+    </div>
+    <div class="container">
+      <h3>5. Where does the SEAT brand originate from?</h3>
+      <input type="radio" name="question5" value="a">Spain <br />
+      <input type="radio" name="question5" value="b">Ireland <br />
+      <input type="radio" name="question5" value="c">Russia<br />
+      <input type="radio" name="quesiton5" value="d">South Korea
+    </div>
     </form>
+  </section>
+
+
+      <div id="incorrect-page" role="main">
+        <h1>Incorrect Answer Screen</h1>
+          <h2>Sorry, wrong answer! The right answer was ${
+            ANSWERS[questionNum - 1]
+          }!</h2>
+          <img src="https://i2-prod.mirror.co.uk/incoming/article7776851.ece/ALTERNATES/s615/Ferrari-458-Spider-wreck.jpg" alt="Wrecked Ferrari">
+        </div>
+        <button id="js-next-button">Next</button>
+
+
+        <section id="feedback-page" role="main">
+          <h1>Correct Answer Screen</h1>
+            <h2 >Correct! The right answer is: ${ANSWERS[questionNum - 1]}</h2>
+            <img src="https://cdn.pixabay.com/photo/2017/06/11/11/46/auto-2392167__340.jpg" alt="Car doing burnout">
+          </section>
+          <button id="js-next-button">Next</button>
+
+        <section id="final-page">
+          <h1>Final Score Results</h1>
+            <h2>Final Score: correctAnswers out of 5</h2>
+          </section>
+          <button id="js-restart-button">Try Again?</button>
+
+          <div class="background pic">
+            <h2>Background Photo</h2>
+            <img src="https://wallpaperaccess.com/full/740488.jpg" alt="Carbon Fiber Ferrari">
+          </div>
     
-  </main>
-
-
-
 </body>
-
 </html>
