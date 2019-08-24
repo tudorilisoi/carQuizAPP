@@ -5,6 +5,7 @@ let score = 0;
  *  the source of truth
  */
 const quizQuestions = [
+    
     {
         question: "1. Where is Honda's country of origin?",
         answers: [
@@ -58,9 +59,25 @@ const quizQuestions = [
 
 ];
 
+function setupStartQuizHandler(){
+    $('#start-button').click(ev=>{
+        questionNumber = 0;
+        score = 0;
+        displayCurrentQuestion()
+
+    })
+}
+
 function startQuiz(){}
 
 function changeScore(){} 
+function displayCurrentQuestion(){
+
+    const q = quizQuestions[questionNumber]
+
+
+
+} 
 
 function changeQuestionNumber(){}
 
