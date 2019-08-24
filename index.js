@@ -1,5 +1,6 @@
 let questionNumber = 0;
 let score = 0;
+const $CONTAINER = $(`#js-mainContent`)
 
 /**
  *  the source of truth
@@ -58,19 +59,71 @@ const quizQuestions = [
 
 ];
 
-function startQuiz(){}
+function handleStartQuiz() {
+    $('#start-button').on('click', ev => {
+        ev.preventDefault()
+        questionNumber = 0;
+        score = 0;
+        displayCurrentQuestion()
+    })
+}
 
-function changeScore(){} 
 
-function changeQuestionNumber(){}
+function handleNextButton() {
+    $('body').on('click', '.js-next-button', ev => {
 
-function questionIncorrect(){}
+        // TODO read the selected answer and update the score
+        // please git pull
+        ev.preventDefault()
+        questionNumber++
+        // questionNumber = questionNumber + 1;
+        displayCurrentQuestion()
+    })
+}
 
-function questionCorrect(){}
+function startQuiz() { }
+function displayCurrentQuestion() {
+    const currentQ = quizQuestions[questionNumber]
 
-function updateScore(){}
-    
-function nextQuestion(){}
+    const options = currentQ.answers.map(answerStr => {
+        return `
+    <option value="${answerStr}">${answerStr}</option>
+    `
+    })
 
-function restartQuiz(){}
+    const htmlString = $(`
+ <form>   
+    <select>
+    ${options.join('\n')}
+    </select>
+    <div>
+        <input type="submit" value="Next" class="js-next-button" />
+    </div>
+</form>
+`)
+    $($CONTAINER).html(htmlString)
 
+}
+
+function changeScore() { }
+
+function changeQuestionNumber() { }
+
+function questionIncorrect() { }
+
+function questionCorrect() { }
+
+function updateScore() { }
+
+function nextQuestion() { }
+
+function restartQuiz() { }
+
+const main = () => {
+    handleNextButton()
+    handleStartQuiz()
+    startQuiz()
+}
+
+//when the DOM is ready
+$(main)
