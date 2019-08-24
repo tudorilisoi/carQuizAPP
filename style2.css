@@ -2,16 +2,22 @@
     box-sizing: border-box;
 }
 
-body { 
-    color:black;
+body {
+    color: black;
     /*background-image: url('https://wallpaperaccess.com/full/740488.jpg');
     background-size: cover;*/
     text-align: center;
 }
+
 ul {
     text-align: center;
     list-style: none;
 }
+
 .container {
     border: 1px solid gray;
+}
+
+.hidden {
+    display: none;
 }
