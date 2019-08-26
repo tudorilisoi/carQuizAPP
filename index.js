@@ -1,5 +1,6 @@
 let questionNumber = 0;
 let score = 0;
+const $CONTAINER = $(`#js-mainContent`)
 
 /**
  *  the source of truth
@@ -59,35 +60,109 @@ const quizQuestions = [
 
 ];
 
-function setupStartQuizHandler(){
-    $('#start-button').click(ev=>{
+function handleStartQuiz() {
+    $('#start-button').on('click', ev => {
+        ev.preventDefault()
         questionNumber = 0;
         score = 0;
+        changeQuestionNumber()
         displayCurrentQuestion()
-
+        $('#start-title').hide()
     })
 }
 
-function startQuiz(){}
 
-function changeScore(){} 
-function displayCurrentQuestion(){
+function handleNextButton() {
+    $('body').on('click', '.js-next-button', ev => {
+        // TODO read the selected answer and update the score
+        
+        // please git pull
+        ev.preventDefault()
+        questionNumber++
+        // questionNumber = questionNumber + 1; 
+        displayCurrentQuestion();
+        changeQuestionNumber();
+        selectedAnswer();
+    })
+}
 
-    const q = quizQuestions[questionNumber]
+function displayCurrentQuestion() {
+    const currentQ = quizQuestions[questionNumber]
+    const input = currentQ.answers.map(answerStr => {
+        return `
+    <input type="radio" name="one" value="${answerStr}">${answerStr}</input><br>
+    `
+    })
+
+    const htmlString = $(`
+ <form id="myForm">  
+    <h2>${quizQuestions[questionNumber].question}</h2>
+    <p>
+    ${input.join('\n')}
+    </p>
+    <div>
+        <input type="submit" value="Next" class="js-next-button" />
+    </div>
+</form>
+`)
+    $($CONTAINER).html(htmlString)
+
+}
+
+function handleChangeScore() { 
+    score ++;
+    //update the score in the heading by ++
+}
+
+function changeQuestionNumber() {
+    $('.questionNumber').text(questionNumber+1)
+ }
+
+function selectedAnswer() {
+    $('#myform').on('click', newEvent => {
+        event.preventDefault();
+        let choiceMade = $('input[name=one]:checked').val()
+        if (choiceMade === quizQuestions[questionNumber].correctAnswer) {
+          ifAnswerCorrect();
+        }
+        else {
+            ifAnswerIncorrect();
+        }
+    });
+}
 
 
 
-} 
+function ifAnswerCorrect() {
+    let correctAnswer = `${quizQuestions[questionNumber].correctAnswer}`;
+    $('#js-mainContent').html(` <section id="feedback-page" role="main">
+              <h1>Correct Answer</h1>
+                  <h2 >Correct! The right answer is: ${correctAnswer} </h2>
+                      <img src="https://cdn.pixabay.com/photo/2017/06/11/11/46/auto-2392167__340.jpg" alt="Car doing burnout">
+                      <button id="js-submit-button">Sumbit</button>
+          </section>`)
+}
 
-function changeQuestionNumber(){}
+function ifAnswerIncorrect(){ 
+    let correctAnswer = `${quizQuestions[questionNumber].correctAnswer}`;
+    $('js-mainContent').html(`<div id="incorrect-page" role="main">
+<h1>Incorrect Answer</h1>
+    <h2>Sorry, wrong answer! The right answer was ${correctAnswer}!</h2>
+          <img src="https://i2-prod.mirror.co.uk/incoming/article7776851.ece/ALTERNATES/s615/Ferrari-458-Spider-wreck.jpg" alt="Wrecked Ferrari">
+</div>
+    <button id="js-submit-button">submit</button>`);
+}
 
-function questionIncorrect(){}
+function nextQuestion() { }
 
-function questionCorrect(){}
+function restartQuiz() { }
 
-function updateScore(){}
-    
-function nextQuestion(){}
+const main = () => {
+    handleNextButton()
+    handleStartQuiz()
+    startQuiz()
+    selectedAnswer()
+}
 
-function restartQuiz(){}
-
+//when the DOM is ready
+$(main)
