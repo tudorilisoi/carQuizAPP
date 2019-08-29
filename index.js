@@ -88,6 +88,7 @@ function handleNextButton() {
 }
 
 function displayCurrentQuestion() {
+    console.log(`Question number: ${questionNumber}`)
     const currentQ = quizQuestions[questionNumber]
     const input = currentQ.answers.map(answerStr => {
         return `
@@ -121,7 +122,7 @@ function changeQuestionNumber() {
 
 function handleAnswerInput() {
     $('body').on('click', '#js-submit-button', event => {
-        if (questionNumber === 5){
+        if (questionNumber === 4){
             event.preventDefault()
             resultsPage()
         } else {
