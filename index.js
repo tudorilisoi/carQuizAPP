@@ -6,7 +6,7 @@ const $CONTAINER = $(`#js-mainContent`)
  *  the source of truth
  */
 const quizQuestions = [
-    
+
     {
         question: "1. Where is Honda's country of origin?",
         answers: [
@@ -28,7 +28,7 @@ const quizQuestions = [
         correctAnswer: "Germany"
     },
     {
-        question: "3. Where is Porche's country of origin?",
+        question: "3. Where is Porsche's country of origin?",
         answers: [
             "Italy",
             "Japan",
@@ -38,7 +38,7 @@ const quizQuestions = [
         correctAnswer: "Germany"
     },
     {
-        question: "4. What vehchile Brand is made in Italy?",
+        question: "4. What vehicle Brand is made in Italy?",
         answers: [
             "Mercedes-Benz",
             "Ford",
@@ -67,30 +67,31 @@ function handleStartQuiz() {
         score = 0;
         changeQuestionNumber()
         displayCurrentQuestion()
+        displayScore()
         $('#start-title').hide()
     })
 }
 
 
 function handleNextButton() {
-    $('body').on('click', '.js-next-button', ev => {
-        // TODO read the selected answer and update the score
-        
-        // please git pull
-        ev.preventDefault()
-        questionNumber++
-        // questionNumber = questionNumber + 1; 
-        displayCurrentQuestion();
-        changeQuestionNumber();
-        selectedAnswer();
-    })
+    // $('body').on('click', '.js-next-button', ev => {
+    // TODO read the selected answer and update the score
+
+    // please git pull
+    // ev.preventDefault()
+    questionNumber++
+    // questionNumber = questionNumber + 1; 
+    displayCurrentQuestion();
+    changeQuestionNumber();
+    // handleAnswerInput();
+    // })
 }
 
 function displayCurrentQuestion() {
     const currentQ = quizQuestions[questionNumber]
     const input = currentQ.answers.map(answerStr => {
         return `
-    <input type="radio" name="one" value="${answerStr}">${answerStr}</input><br>
+    <input class="choices" type="radio" name="one" required value="${answerStr}">${answerStr}</input><br>
     `
     })
 
@@ -109,24 +110,36 @@ function displayCurrentQuestion() {
 
 }
 
-function handleChangeScore() { 
-    score ++;
+function displayScore() {
+    $('.score').text(score)
     //update the score in the heading by ++
 }
 
 function changeQuestionNumber() {
-    $('.questionNumber').text(questionNumber+1)
- }
+    $('.questionNumber').text(questionNumber + 1)
+}
 
-function selectedAnswer() {
-    $('#myform').on('click', newEvent => {
-        event.preventDefault();
+function handleAnswerInput() {
+    $('body').on('click', '#js-submit-button', event => {
+        if (questionNumber === 5){
+            event.preventDefault()
+            resultsPage()
+        } else {
+            event.preventDefault()
+            handleNextButton()
+    }
+       
+    })
+    $('body').on('submit', '#myForm', event => {
+        event.preventDefault()
         let choiceMade = $('input[name=one]:checked').val()
         if (choiceMade === quizQuestions[questionNumber].correctAnswer) {
-          ifAnswerCorrect();
+            score++
+            ifAnswerCorrect()
+            displayScore()
         }
         else {
-            ifAnswerIncorrect();
+            ifAnswerIncorrect()
         }
     });
 }
@@ -135,33 +148,48 @@ function selectedAnswer() {
 
 function ifAnswerCorrect() {
     let correctAnswer = `${quizQuestions[questionNumber].correctAnswer}`;
-    $('#js-mainContent').html(` <section id="feedback-page" role="main">
+    $CONTAINER.html(` <section id="feedback-page" role="main">
               <h1>Correct Answer</h1>
                   <h2 >Correct! The right answer is: ${correctAnswer} </h2>
                       <img src="https://cdn.pixabay.com/photo/2017/06/11/11/46/auto-2392167__340.jpg" alt="Car doing burnout">
+                      </section>
                       <button id="js-submit-button">Sumbit</button>
-          </section>`)
+          `)
 }
 
-function ifAnswerIncorrect(){ 
+function ifAnswerIncorrect() {
     let correctAnswer = `${quizQuestions[questionNumber].correctAnswer}`;
-    $('js-mainContent').html(`<div id="incorrect-page" role="main">
+    $CONTAINER.html(`<div id="incorrect-page" role="main">
 <h1>Incorrect Answer</h1>
     <h2>Sorry, wrong answer! The right answer was ${correctAnswer}!</h2>
           <img src="https://i2-prod.mirror.co.uk/incoming/article7776851.ece/ALTERNATES/s615/Ferrari-458-Spider-wreck.jpg" alt="Wrecked Ferrari">
 </div>
-    <button id="js-submit-button">submit</button>`);
+    <button id="js-submit-button">Submit</button>`);
 }
 
-function nextQuestion() { }
+function resultsPage() {
+    $CONTAINER.html(`
+    <section id="final-page">
+      <h1>Final Score Results</h1>
+      <h2>Final Score: ${score} out of 5</h2>
+      <button id="js-restart-button">Try Again?</button>
+    </section>`)
+ }
 
-function restartQuiz() { }
+function restartQuiz(){
+    $('body').on('click', '#js-restart-button', event => {
+        window.location.reload();
+    })
+}
+ 
 
 const main = () => {
-    handleNextButton()
+    // handleNextButton()
     handleStartQuiz()
-    startQuiz()
-    selectedAnswer()
+    // startQuiz()
+    //goToResultsPage()
+    handleAnswerInput()
+    restartQuiz()
 }
 
 //when the DOM is ready
