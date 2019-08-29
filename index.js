@@ -92,8 +92,10 @@ function displayCurrentQuestion() {
     const currentQ = quizQuestions[questionNumber]
     const input = currentQ.answers.map((answerStr, index) => {
         return `
-    <label for="${'choice-' + index}" class="choices-label"> ${answerStr} </label>    
-    <input id="${'choice-' + index}" name="one" class="choices" type="radio" required value="${answerStr}"></input>
+    <label class="choices-label"> ${answerStr} 
+    <input name="one" class="choices" type="radio" required value="${answerStr}"></input>
+    </label>    
+    
     
     `
     })
@@ -103,10 +105,10 @@ function displayCurrentQuestion() {
     <h2>${quizQuestions[questionNumber].question}</h2>
     <p>
     <fieldset > 
-    <legend>Choices</legend>
-        <div role="radiogroup">
-            ${input.join('\n')}
-        </div>    
+    <legend>Choices</legend>   
+    <div class="choices-wrapper">     
+            ${input.join('\n')}          
+    </div>             
     </fieldset>
     </p>
     <div>
