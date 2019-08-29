@@ -90,9 +90,11 @@ function handleNextButton() {
 function displayCurrentQuestion() {
     console.log(`Question number: ${questionNumber}`)
     const currentQ = quizQuestions[questionNumber]
-    const input = currentQ.answers.map(answerStr => {
+    const input = currentQ.answers.map((answerStr, index) => {
         return `
-    <input class="choices" type="radio" name="one" required value="${answerStr}">${answerStr}</input><br>
+    <label for="${'choice-' + index}" class="choices-label"> ${answerStr} </label>    
+    <input id="${'choice-' + index}" name="one" class="choices" type="radio" required value="${answerStr}"></input>
+    
     `
     })
 
@@ -100,7 +102,12 @@ function displayCurrentQuestion() {
  <form id="myForm">  
     <h2>${quizQuestions[questionNumber].question}</h2>
     <p>
-    ${input.join('\n')}
+    <fieldset > 
+    <legend>Choices</legend>
+        <div role="radiogroup">
+            ${input.join('\n')}
+        </div>    
+    </fieldset>
     </p>
     <div>
         <input type="submit" value="Next" class="js-next-button" />
@@ -149,7 +156,7 @@ function handleAnswerInput() {
 
 function ifAnswerCorrect() {
     let correctAnswer = `${quizQuestions[questionNumber].correctAnswer}`;
-    $CONTAINER.html(` <section id="feedback-page" role="main">
+    $CONTAINER.html(` <section id="feedback-page" >
               <h1>Correct Answer</h1>
                   <h2 >Correct! The right answer is: ${correctAnswer} </h2>
                       <img src="https://cdn.pixabay.com/photo/2017/06/11/11/46/auto-2392167__340.jpg" alt="Car doing burnout">
@@ -160,7 +167,7 @@ function ifAnswerCorrect() {
 
 function ifAnswerIncorrect() {
     let correctAnswer = `${quizQuestions[questionNumber].correctAnswer}`;
-    $CONTAINER.html(`<div id="incorrect-page" role="main">
+    $CONTAINER.html(`<div id="incorrect-page" >
 <h1>Incorrect Answer</h1>
     <h2>Sorry, wrong answer! The right answer was ${correctAnswer}!</h2>
           <img src="https://i2-prod.mirror.co.uk/incoming/article7776851.ece/ALTERNATES/s615/Ferrari-458-Spider-wreck.jpg" alt="Wrecked Ferrari">
